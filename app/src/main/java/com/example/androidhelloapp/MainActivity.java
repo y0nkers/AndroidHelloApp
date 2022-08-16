@@ -1,24 +1,20 @@
 package com.example.androidhelloapp;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
-import android.graphics.Color;
 import android.os.Bundle;
-import android.util.TypedValue;
-import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.second_layout);
+        setContentView(R.layout.constraint_layout);
 
         /*TextView textView = findViewById(R.id.header);
         textView.setText("Hello Android"); */
 
-        ConstraintLayout constraintLayout = new ConstraintLayout(this);
+        /*ConstraintLayout constraintLayout = new ConstraintLayout(this);
         constraintLayout.setBackgroundColor(Color.BLACK);
         TextView textView = new TextView(this);
         textView.setText("Hello Android");
@@ -47,6 +43,6 @@ public class MainActivity extends AppCompatActivity {
         textView.setPadding(padding40inDp, padding40inDp, padding40inDp, padding40inDp);
         // добавляем TextView в ConstraintLayout
         constraintLayout.addView(textView);
-        setContentView(constraintLayout);
+        setContentView(constraintLayout);*/
     }
 }
