@@ -1,22 +1,22 @@
 package com.example.androidhelloapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.util.TypedValue;
+import android.view.Gravity;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.constraint_layout);
-
-        /*TextView textView = findViewById(R.id.header);
-        textView.setText("Hello Android"); */
-
-        /*ConstraintLayout constraintLayout = new ConstraintLayout(this);
+    public  void testConstraintLayout(Context context) {
+        ConstraintLayout constraintLayout = new ConstraintLayout(context);
         constraintLayout.setBackgroundColor(Color.BLACK);
-        TextView textView = new TextView(this);
+        TextView textView = new TextView(context);
         textView.setText("Hello Android");
         textView.setTextSize(26);
         textView.setBackgroundColor(Color.CYAN);
@@ -43,6 +43,44 @@ public class MainActivity extends AppCompatActivity {
         textView.setPadding(padding40inDp, padding40inDp, padding40inDp, padding40inDp);
         // добавляем TextView в ConstraintLayout
         constraintLayout.addView(textView);
-        setContentView(constraintLayout);*/
+        setContentView(constraintLayout);
+    }
+
+    public void testLinearLayout(Context context) {
+        LinearLayout linearLayout = new LinearLayout(context);
+        linearLayout.setOrientation(LinearLayout.VERTICAL);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams
+                (LinearLayout.LayoutParams.WRAP_CONTENT, 0, 1);
+        layoutParams.gravity = Gravity.CENTER;
+
+        TextView textView1 = new TextView(context);
+        textView1.setText("Hello Java!");
+        textView1.setTextSize(30);
+        textView1.setBackgroundColor(Color.GRAY);
+        linearLayout.addView(textView1, layoutParams);
+
+        TextView textView2 = new TextView(context);
+        textView2.setText("Hello World!");
+        textView2.setTextSize(30);
+        textView2.setBackgroundColor(Color.GRAY);
+        linearLayout.addView(textView2, layoutParams);
+
+        TextView textView3 = new TextView(context);
+        textView3.setText("Hello Android!");
+        textView3.setTextSize(30);
+        textView3.setBackgroundColor(Color.GRAY);
+        linearLayout.addView(textView3, layoutParams);
+
+        setContentView(linearLayout);
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        /*TextView textView = findViewById(R.id.header);
+        textView.setText("Hello Android"); */
+
+        setContentView(R.layout.constraint_layout);
     }
 }
