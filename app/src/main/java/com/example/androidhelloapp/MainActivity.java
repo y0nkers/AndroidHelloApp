@@ -8,7 +8,10 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
@@ -74,6 +77,39 @@ public class MainActivity extends AppCompatActivity {
         setContentView(linearLayout);
     }
 
+    public void testRelativeLayout(Context context) {
+        RelativeLayout relativeLayout = new RelativeLayout(context);
+
+        EditText editText = new EditText(context);
+        editText.setHint("Email");
+        editText.setId(EditText.generateViewId());
+
+        Button button = new Button(context);
+        button.setText("Отправить");
+
+        // устанавливаем параметры положения для EditText
+        RelativeLayout.LayoutParams editTextParams = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.MATCH_PARENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT
+        );
+        // выравнивание по центру родительского контейнера
+        editTextParams.addRule(RelativeLayout.CENTER_IN_PARENT);
+        // добавляем в RelativeLayout
+        relativeLayout.addView(editText, editTextParams);
+
+        // устанавливаем параметры положения для Button
+        RelativeLayout.LayoutParams buttonParams = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.WRAP_CONTENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT
+        );
+        // выравнивание справа и снизу от поля EditText
+        buttonParams.addRule(RelativeLayout.BELOW, editText.getId());
+        buttonParams.addRule(RelativeLayout.ALIGN_RIGHT, editText.getId());
+        // добавляем в RelativeLayout
+        relativeLayout.addView(button, buttonParams);
+
+        setContentView(relativeLayout);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,6 +117,7 @@ public class MainActivity extends AppCompatActivity {
         /*TextView textView = findViewById(R.id.header);
         textView.setText("Hello Android"); */
 
-        setContentView(R.layout.constraint_layout);
+        testRelativeLayout(this);
+        //setContentView(R.layout.relative_layout);
     }
 }
