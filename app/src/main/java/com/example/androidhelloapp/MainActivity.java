@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
         textView.setText("Hello Android");
         textView.setTextSize(26);
         textView.setBackgroundColor(Color.CYAN);
+        textView.setGravity(Gravity.CENTER);
 
         // получаем отступ в пикселях для 50 dp
         int margin50inDp = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50, getResources().getDisplayMetrics());
@@ -43,10 +44,10 @@ public class MainActivity extends AppCompatActivity {
         ConstraintLayout.LayoutParams layoutParams = new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.WRAP_CONTENT, ConstraintLayout.LayoutParams.WRAP_CONTENT);
         // установка внешних отступов
         layoutParams.setMargins(margin60inDp, margin50inDp, margin60inDp, margin50inDp);
-        // эквивалент app:layout_constraintLeft_toLeftOf="parent"
         layoutParams.leftToLeft = ConstraintLayout.LayoutParams.PARENT_ID;
-        // эквивалент app:layout_constraintTop_toTopOf="parent"
+        layoutParams.rightToRight = ConstraintLayout.LayoutParams.PARENT_ID;
         layoutParams.topToTop = ConstraintLayout.LayoutParams.PARENT_ID;
+        layoutParams.bottomToBottom = ConstraintLayout.LayoutParams.PARENT_ID;
         // устанавливаем параметры для textView
         textView.setLayoutParams(layoutParams);
         // установка внутренних отступов
@@ -209,14 +210,40 @@ public class MainActivity extends AppCompatActivity {
         setContentView(scrollView);
     }
 
+    int clicks = 0;
+    public void testClicks() {
+        setContentView(R.layout.activity_main);
+
+        TextView clicksText = findViewById(R.id.clicksText);
+        // Сначала находим элементы include, которые указаны в activity_main.xml
+        View plusButtonView = findViewById(R.id.plus_button);
+        View minusButtonView = findViewById(R.id.minus_button);
+
+        // Далее в этих View находим кнопку с определённым id
+        Button plusButton = plusButtonView.findViewById(R.id.clickBtn);
+        Button minusButton = minusButtonView.findViewById(R.id.clickBtn);
+
+        plusButton.setText("clicks++");
+        minusButton.setText("clicks--");
+
+        plusButton.setOnClickListener(v -> {
+            clicks++;
+            clicksText.setText(clicks + " Clicks");
+        });
+
+        minusButton.setOnClickListener(v -> {
+            if (clicks > 0) {
+                clicks--;
+                clicksText.setText(clicks + " Clicks");
+            }
+        });
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //setContentView(R.layout.activity_main);
 
-        /*TextView textView = findViewById(R.id.header);
-        textView.setText("Hello Android"); */
-
-        //setContentView(R.layout.scroll_view);
-        testScrollView(this);
+        testClicks();
     }
 }
