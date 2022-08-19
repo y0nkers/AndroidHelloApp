@@ -5,8 +5,9 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.media.Image;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.util.Linkify;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
@@ -21,6 +22,7 @@ import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -239,11 +241,43 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    public void testElements(Context context) {
+        ConstraintLayout constraintLayout = new ConstraintLayout(context);
+        TextView textView = new TextView(context);
+        textView.setBackgroundColor(0xffe8eaf6); // установка фонового цвета
+        textView.setTextColor(0xff5c6bc0); // установка цвета текста
+        textView.setAllCaps(true); // делаем все буквы заглавными
+        textView.setTextAlignment(TextView.TEXT_ALIGNMENT_CENTER); // устанавливаем вравнивание текста по центру
+        textView.setText("Hello Android!");
+        textView.setTypeface(Typeface.create("casual", Typeface.NORMAL));
+        textView.setTextSize(26);
+
+        ConstraintLayout.LayoutParams layoutParams = new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.WRAP_CONTENT, ConstraintLayout.LayoutParams.WRAP_CONTENT);
+        layoutParams.leftToLeft = ConstraintLayout.LayoutParams.PARENT_ID;
+        layoutParams.topToTop = ConstraintLayout.LayoutParams.PARENT_ID;
+        textView.setLayoutParams(layoutParams);
+
+        TextView textView1 = new TextView(context);
+        textView1.setTextAlignment(TextView.TEXT_ALIGNMENT_TEXT_END);
+        textView1.setText("Check out metanit.com");
+        Linkify.addLinks(textView1, Linkify.WEB_URLS);
+        textView1.setLayoutParams(layoutParams);
+
+        ConstraintLayout.LayoutParams layoutParams1 = new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.WRAP_CONTENT, ConstraintLayout.LayoutParams.WRAP_CONTENT);
+        layoutParams1.rightToRight = ConstraintLayout.LayoutParams.PARENT_ID;
+        layoutParams1.bottomToBottom = ConstraintLayout.LayoutParams.PARENT_ID;
+        textView1.setLayoutParams(layoutParams1);
+
+        constraintLayout.addView(textView);
+        constraintLayout.addView(textView1);
+        setContentView(constraintLayout);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_main);
+        //setContentView(R.layout.test_elements);
 
-        testClicks();
+        testElements(this);
     }
 }
