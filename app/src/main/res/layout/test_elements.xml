@@ -6,11 +6,12 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:layout_height="wrap_content"
+        android:id="@+id/topText"
         android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_margin="5dp"
 
-        android:text="Hello Android!"
+        android:text="Hello, User!"
         android:fontFamily="sans-serif"
         android:textSize="26sp"
         android:background="#ffebee"
@@ -19,18 +20,49 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>
-    <TextView
-        android:layout_height="wrap_content"
+
+    <EditText
+        android:id="@+id/name"
         android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        android:inputType="text"
+        android:maxLines="1"
+        android:hint="Введите имя"
+
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/topText"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <EditText
+        android:id="@+id/message"
+        android:layout_marginTop="16dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+
+        android:hint="Введите сообщение"
+        android:inputType="textMultiLine|textCapSentences"
+        android:gravity="top"
+
+        app:layout_constraintTop_toBottomOf="@+id/name"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/inputButton" />
+
+    <Button
+        android:id="@+id/inputButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_margin="5dp"
 
-        android:text="Hello Java"
+        android:text="Ввод"
         android:fontFamily="casual"
         android:textAlignment="center"
         android:textAllCaps="true"
         android:textSize="26sp"
         android:background="#ede7f6"
         android:textColor="#7e57c2"
+        android:onClick="inputInfo"
 
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -38,8 +70,30 @@
         app:layout_constraintRight_toRightOf="parent"/>
 
     <TextView
-        android:layout_height="wrap_content"
+        android:id="@+id/nameText"
         android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        android:text="Name: "
+        android:textSize="26sp"
+
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/inputButton"/>
+
+    <TextView
+        android:id="@+id/messageText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        android:text="Message: "
+        android:textSize="26sp"
+
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nameText"/>
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_margin="5dp"
 
         android:text="Check out metanit.com"

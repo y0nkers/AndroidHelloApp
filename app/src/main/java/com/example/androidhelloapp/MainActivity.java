@@ -7,11 +7,15 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.InputType;
+import android.text.TextWatcher;
 import android.text.util.Linkify;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridLayout;
@@ -248,7 +252,8 @@ public class MainActivity extends AppCompatActivity {
         textView.setTextColor(0xff5c6bc0); // установка цвета текста
         textView.setAllCaps(true); // делаем все буквы заглавными
         textView.setTextAlignment(TextView.TEXT_ALIGNMENT_CENTER); // устанавливаем вравнивание текста по центру
-        textView.setText("Hello Android!");
+        textView.setText("Hello, User!");
+        textView.setId(View.generateViewId());
         textView.setTypeface(Typeface.create("casual", Typeface.NORMAL));
         textView.setTextSize(26);
 
@@ -262,15 +267,118 @@ public class MainActivity extends AppCompatActivity {
         textView1.setText("Check out metanit.com");
         Linkify.addLinks(textView1, Linkify.WEB_URLS);
         textView1.setLayoutParams(layoutParams);
+        textView1.setId(View.generateViewId());
 
         ConstraintLayout.LayoutParams layoutParams1 = new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.WRAP_CONTENT, ConstraintLayout.LayoutParams.WRAP_CONTENT);
         layoutParams1.rightToRight = ConstraintLayout.LayoutParams.PARENT_ID;
         layoutParams1.bottomToBottom = ConstraintLayout.LayoutParams.PARENT_ID;
         textView1.setLayoutParams(layoutParams1);
 
+        EditText nameEdit = new EditText(context);
+        nameEdit.setId(View.generateViewId());
+        nameEdit.setHint("Введите имя");
+        nameEdit.setInputType(InputType.TYPE_CLASS_TEXT);
+        nameEdit.setMaxLines(1);
+
+        ConstraintLayout.LayoutParams nameEditLayout =  new ConstraintLayout.LayoutParams(0, ConstraintLayout.LayoutParams.WRAP_CONTENT);
+        nameEditLayout.topToBottom = textView.getId();
+        nameEditLayout.leftToLeft = ConstraintLayout.LayoutParams.PARENT_ID;
+        nameEditLayout.rightToRight = ConstraintLayout.LayoutParams.PARENT_ID;
+        nameEdit.setLayoutParams(nameEditLayout);
+
+        nameEdit.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (nameEdit.getText().toString().matches("")) textView.setText("Hello, User");
+                else textView.setText("Hello, " + charSequence + "!");
+            }
+            @Override
+            public void afterTextChanged(Editable editable) {}
+        });
+
+        EditText messageEdit = new EditText(context);
+        messageEdit.setId(View.generateViewId());
+        messageEdit.setHint("Введите сообщение");
+        messageEdit.setSingleLine(false);
+        messageEdit.setImeOptions(EditorInfo.IME_FLAG_NO_ENTER_ACTION);
+        messageEdit.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_MULTI_LINE | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
+        messageEdit.setGravity(Gravity.TOP);
+
+        Button inputButton = new Button(context);
+        inputButton.setText("Ввод");
+        inputButton.setId(View.generateViewId());
+
+        ConstraintLayout.LayoutParams messageEditLayout =  new ConstraintLayout.LayoutParams(0, 0);
+        messageEditLayout.topToBottom = nameEdit.getId();
+        messageEditLayout.leftToLeft = ConstraintLayout.LayoutParams.PARENT_ID;
+        messageEditLayout.rightToRight = ConstraintLayout.LayoutParams.PARENT_ID;
+        messageEditLayout.bottomToTop = inputButton.getId();
+        messageEdit.setLayoutParams(messageEditLayout);
+
+        ConstraintLayout.LayoutParams buttonLayout =  new ConstraintLayout.LayoutParams(0, ConstraintLayout.LayoutParams.WRAP_CONTENT);
+        buttonLayout.topToTop = ConstraintLayout.LayoutParams.PARENT_ID;
+        buttonLayout.leftToLeft = ConstraintLayout.LayoutParams.PARENT_ID;
+        buttonLayout.rightToRight = ConstraintLayout.LayoutParams.PARENT_ID;
+        buttonLayout.bottomToBottom = ConstraintLayout.LayoutParams.PARENT_ID;
+        inputButton.setLayoutParams(buttonLayout);
+
+
+        TextView nameText = new TextView(context);
+        nameText.setId(View.generateViewId());
+        nameText.setText("Name: ");
+
+        ConstraintLayout.LayoutParams nameTextLayout = new ConstraintLayout.LayoutParams(0, ConstraintLayout.LayoutParams.WRAP_CONTENT);
+        nameTextLayout.leftToLeft = ConstraintLayout.LayoutParams.PARENT_ID;
+        nameTextLayout.topToBottom = inputButton.getId();
+        nameText.setLayoutParams(nameTextLayout);
+
+        TextView messageText = new TextView(context);
+        messageText.setId(View.generateViewId());
+        messageText.setText("Message: ");
+
+        ConstraintLayout.LayoutParams messageTextLayout = new ConstraintLayout.LayoutParams(0, ConstraintLayout.LayoutParams.WRAP_CONTENT);
+        messageTextLayout.leftToLeft = ConstraintLayout.LayoutParams.PARENT_ID;
+        messageTextLayout.topToBottom = nameText.getId();
+        messageText.setLayoutParams(messageTextLayout);
+
+        inputButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                nameText.setText("Name: " + nameEdit.getText());
+                messageText.setText("Message: " + messageEdit.getText());
+            }
+        });
+
         constraintLayout.addView(textView);
         constraintLayout.addView(textView1);
+        constraintLayout.addView(nameEdit);
+        constraintLayout.addView(messageEdit);
+        constraintLayout.addView(inputButton);
+        constraintLayout.addView(nameText);
+        constraintLayout.addView(messageText);
         setContentView(constraintLayout);
+    }
+
+    public void editText() {
+        setContentView(R.layout.test_elements);
+
+        EditText editText = findViewById(R.id.name);
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
+                TextView textView = findViewById(R.id.topText);
+                if (editText.getText().toString().matches("")) textView.setText("Hello, User!");
+                else textView.setText("Hello, " + charSequence + "!");
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {}
+        });
     }
 
     @Override
@@ -279,5 +387,17 @@ public class MainActivity extends AppCompatActivity {
         //setContentView(R.layout.test_elements);
 
         testElements(this);
+    }
+
+    public void inputInfo(View view) {
+        EditText nameEdit = findViewById(R.id.name);
+        EditText messageEdit = findViewById(R.id.message);
+
+        TextView nameText = findViewById(R.id.nameText);
+        TextView messageText = findViewById(R.id.messageText);
+
+        nameText.setText("Name: " + nameEdit.getText());
+        messageText.setText("Message: " + messageEdit.getText());
+
     }
 }
