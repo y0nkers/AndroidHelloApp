@@ -13,6 +13,7 @@ import android.text.TextWatcher;
 import android.text.util.Linkify;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
@@ -26,6 +27,7 @@ import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -348,6 +350,24 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 nameText.setText("Name: " + nameEdit.getText());
                 messageText.setText("Message: " + messageEdit.getText());
+
+                // Default toast
+                /*Toast toast = Toast.makeText(context, "Info entered", Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.TOP, 0, 160);
+                toast.show();*/
+
+                // Custom toast
+                LayoutInflater inflater = getLayoutInflater();
+                View layout = inflater.inflate(R.layout.custom_toast, null);
+                TextView text = layout.findViewById(R.id.toastText);
+                text.setText("Info entered");
+
+                Toast toast = new Toast(getApplicationContext());
+                toast.setGravity(Gravity.TOP, 0, 160);
+                toast.setDuration(Toast.LENGTH_LONG);
+                toast.setView(layout);
+                toast.show();
+
             }
         });
 
@@ -384,9 +404,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.test_elements);
+        setContentView(R.layout.test_elements);
 
-        testElements(this);
+        //testElements(this);
     }
 
     public void inputInfo(View view) {
@@ -399,5 +419,8 @@ public class MainActivity extends AppCompatActivity {
         nameText.setText("Name: " + nameEdit.getText());
         messageText.setText("Message: " + messageEdit.getText());
 
+        Toast toast = Toast.makeText(this, "Info entered", Toast.LENGTH_LONG);
+        toast.setGravity(Gravity.TOP, 0, 160);
+        toast.show();
     }
 }
