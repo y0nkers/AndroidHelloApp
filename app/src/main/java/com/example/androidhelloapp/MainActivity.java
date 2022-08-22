@@ -29,6 +29,8 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.snackbar.Snackbar;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -249,32 +251,32 @@ public class MainActivity extends AppCompatActivity {
 
     public void testElements(Context context) {
         ConstraintLayout constraintLayout = new ConstraintLayout(context);
-        TextView textView = new TextView(context);
-        textView.setBackgroundColor(0xffe8eaf6); // установка фонового цвета
-        textView.setTextColor(0xff5c6bc0); // установка цвета текста
-        textView.setAllCaps(true); // делаем все буквы заглавными
-        textView.setTextAlignment(TextView.TEXT_ALIGNMENT_CENTER); // устанавливаем вравнивание текста по центру
-        textView.setText("Hello, User!");
-        textView.setId(View.generateViewId());
-        textView.setTypeface(Typeface.create("casual", Typeface.NORMAL));
-        textView.setTextSize(26);
+        TextView topText = new TextView(context);
+        topText.setBackgroundColor(0xffe8eaf6); // установка фонового цвета
+        topText.setTextColor(0xff5c6bc0); // установка цвета текста
+        topText.setAllCaps(true); // делаем все буквы заглавными
+        topText.setTextAlignment(TextView.TEXT_ALIGNMENT_CENTER); // устанавливаем вравнивание текста по центру
+        topText.setText("Hello, User!");
+        topText.setId(View.generateViewId());
+        topText.setTypeface(Typeface.create("casual", Typeface.NORMAL));
+        topText.setTextSize(26);
 
-        ConstraintLayout.LayoutParams layoutParams = new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.WRAP_CONTENT, ConstraintLayout.LayoutParams.WRAP_CONTENT);
-        layoutParams.leftToLeft = ConstraintLayout.LayoutParams.PARENT_ID;
-        layoutParams.topToTop = ConstraintLayout.LayoutParams.PARENT_ID;
-        textView.setLayoutParams(layoutParams);
+        ConstraintLayout.LayoutParams topTextLayout = new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.WRAP_CONTENT, ConstraintLayout.LayoutParams.WRAP_CONTENT);
+        topTextLayout.leftToLeft = ConstraintLayout.LayoutParams.PARENT_ID;
+        topTextLayout.topToTop = ConstraintLayout.LayoutParams.PARENT_ID;
+        topText.setLayoutParams(topTextLayout);
 
-        TextView textView1 = new TextView(context);
-        textView1.setTextAlignment(TextView.TEXT_ALIGNMENT_TEXT_END);
-        textView1.setText("Check out metanit.com");
-        Linkify.addLinks(textView1, Linkify.WEB_URLS);
-        textView1.setLayoutParams(layoutParams);
-        textView1.setId(View.generateViewId());
+        TextView bottomText = new TextView(context);
+        bottomText.setTextAlignment(TextView.TEXT_ALIGNMENT_TEXT_END);
+        bottomText.setText("Check out metanit.com");
+        Linkify.addLinks(bottomText, Linkify.WEB_URLS);
+        bottomText.setLayoutParams(topTextLayout);
+        bottomText.setId(View.generateViewId());
 
-        ConstraintLayout.LayoutParams layoutParams1 = new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.WRAP_CONTENT, ConstraintLayout.LayoutParams.WRAP_CONTENT);
-        layoutParams1.rightToRight = ConstraintLayout.LayoutParams.PARENT_ID;
-        layoutParams1.bottomToBottom = ConstraintLayout.LayoutParams.PARENT_ID;
-        textView1.setLayoutParams(layoutParams1);
+        ConstraintLayout.LayoutParams bottomTextLayout = new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.WRAP_CONTENT, ConstraintLayout.LayoutParams.WRAP_CONTENT);
+        bottomTextLayout.rightToRight = ConstraintLayout.LayoutParams.PARENT_ID;
+        bottomTextLayout.bottomToBottom = ConstraintLayout.LayoutParams.PARENT_ID;
+        bottomText.setLayoutParams(bottomTextLayout);
 
         EditText nameEdit = new EditText(context);
         nameEdit.setId(View.generateViewId());
@@ -283,7 +285,7 @@ public class MainActivity extends AppCompatActivity {
         nameEdit.setMaxLines(1);
 
         ConstraintLayout.LayoutParams nameEditLayout =  new ConstraintLayout.LayoutParams(0, ConstraintLayout.LayoutParams.WRAP_CONTENT);
-        nameEditLayout.topToBottom = textView.getId();
+        nameEditLayout.topToBottom = topText.getId();
         nameEditLayout.leftToLeft = ConstraintLayout.LayoutParams.PARENT_ID;
         nameEditLayout.rightToRight = ConstraintLayout.LayoutParams.PARENT_ID;
         nameEdit.setLayoutParams(nameEditLayout);
@@ -293,8 +295,8 @@ public class MainActivity extends AppCompatActivity {
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (nameEdit.getText().toString().matches("")) textView.setText("Hello, User");
-                else textView.setText("Hello, " + charSequence + "!");
+                if (nameEdit.getText().toString().matches("")) topText.setText("Hello, User");
+                else topText.setText("Hello, " + charSequence + "!");
             }
             @Override
             public void afterTextChanged(Editable editable) {}
@@ -319,13 +321,12 @@ public class MainActivity extends AppCompatActivity {
         messageEditLayout.bottomToTop = inputButton.getId();
         messageEdit.setLayoutParams(messageEditLayout);
 
-        ConstraintLayout.LayoutParams buttonLayout =  new ConstraintLayout.LayoutParams(0, ConstraintLayout.LayoutParams.WRAP_CONTENT);
-        buttonLayout.topToTop = ConstraintLayout.LayoutParams.PARENT_ID;
-        buttonLayout.leftToLeft = ConstraintLayout.LayoutParams.PARENT_ID;
-        buttonLayout.rightToRight = ConstraintLayout.LayoutParams.PARENT_ID;
-        buttonLayout.bottomToBottom = ConstraintLayout.LayoutParams.PARENT_ID;
-        inputButton.setLayoutParams(buttonLayout);
-
+        ConstraintLayout.LayoutParams inputButtonLayout =  new ConstraintLayout.LayoutParams(0, ConstraintLayout.LayoutParams.WRAP_CONTENT);
+        inputButtonLayout.topToTop = ConstraintLayout.LayoutParams.PARENT_ID;
+        inputButtonLayout.leftToLeft = ConstraintLayout.LayoutParams.PARENT_ID;
+        inputButtonLayout.rightToRight = ConstraintLayout.LayoutParams.PARENT_ID;
+        inputButtonLayout.bottomToBottom = ConstraintLayout.LayoutParams.PARENT_ID;
+        inputButton.setLayoutParams(inputButtonLayout);
 
         TextView nameText = new TextView(context);
         nameText.setId(View.generateViewId());
@@ -350,9 +351,18 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 nameText.setText("Name: " + nameEdit.getText());
                 messageText.setText("Message: " + messageEdit.getText());
+            }
+        });
 
+        Button toastButton = new Button(context);
+        toastButton.setText("Toast");
+        toastButton.setId(View.generateViewId());
+
+        toastButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 // Default toast
-                /*Toast toast = Toast.makeText(context, "Info entered", Toast.LENGTH_LONG);
+                /*Toast toast = Toast.makeText(context, "Toast!", Toast.LENGTH_LONG);
                 toast.setGravity(Gravity.TOP, 0, 160);
                 toast.show();*/
 
@@ -360,24 +370,59 @@ public class MainActivity extends AppCompatActivity {
                 LayoutInflater inflater = getLayoutInflater();
                 View layout = inflater.inflate(R.layout.custom_toast, null);
                 TextView text = layout.findViewById(R.id.toastText);
-                text.setText("Info entered");
+                text.setText("Toast!");
 
                 Toast toast = new Toast(getApplicationContext());
                 toast.setGravity(Gravity.TOP, 0, 160);
                 toast.setDuration(Toast.LENGTH_LONG);
                 toast.setView(layout);
                 toast.show();
-
             }
         });
 
-        constraintLayout.addView(textView);
-        constraintLayout.addView(textView1);
+        Button snackbarButton = new Button(context);
+        snackbarButton.setText("Snackbar");
+        snackbarButton.setId(View.generateViewId());
+
+        snackbarButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar snackbar = Snackbar.make(view, "Snackbar!", Snackbar.LENGTH_LONG);
+                snackbar.setAction("Next", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Toast toast = Toast.makeText(context, "Toast!", Toast.LENGTH_LONG);
+                        toast.setGravity(Gravity.TOP, 0, 160);
+                        toast.show();
+                    }
+                });
+
+                snackbar.setTextColor(0XFF81C784);
+                snackbar.setBackgroundTint(0XFF555555);
+                snackbar.setActionTextColor(0XFF0277BD);
+                snackbar.show();
+            }
+        });
+
+        ConstraintLayout.LayoutParams toastButtonLayout =  new ConstraintLayout.LayoutParams(0, ConstraintLayout.LayoutParams.WRAP_CONTENT);
+        toastButtonLayout.leftToLeft = ConstraintLayout.LayoutParams.PARENT_ID;
+        toastButtonLayout.bottomToTop = bottomText.getId();
+        toastButton.setLayoutParams(toastButtonLayout);
+
+        ConstraintLayout.LayoutParams snackbarButtonLayout =  new ConstraintLayout.LayoutParams(0, ConstraintLayout.LayoutParams.WRAP_CONTENT);
+        snackbarButtonLayout.leftToRight = toastButton.getId();
+        snackbarButtonLayout.bottomToTop = bottomText.getId();
+        snackbarButton.setLayoutParams(snackbarButtonLayout);
+
+        constraintLayout.addView(topText);
+        constraintLayout.addView(bottomText);
         constraintLayout.addView(nameEdit);
         constraintLayout.addView(messageEdit);
         constraintLayout.addView(inputButton);
         constraintLayout.addView(nameText);
         constraintLayout.addView(messageText);
+        constraintLayout.addView(toastButton);
+        constraintLayout.addView(snackbarButton);
         setContentView(constraintLayout);
     }
 
@@ -404,9 +449,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.test_elements);
+        //setContentView(R.layout.test_elements);
 
-        //testElements(this);
+        testElements(this);
     }
 
     public void inputInfo(View view) {
@@ -419,8 +464,10 @@ public class MainActivity extends AppCompatActivity {
         nameText.setText("Name: " + nameEdit.getText());
         messageText.setText("Message: " + messageEdit.getText());
 
-        Toast toast = Toast.makeText(this, "Info entered", Toast.LENGTH_LONG);
+        Toast toast = Toast.makeText(this, "Toast!", Toast.LENGTH_LONG);
         toast.setGravity(Gravity.TOP, 0, 160);
         toast.show();
+
+        Snackbar.make(view, "Snackbar!", Snackbar.LENGTH_LONG).show();
     }
 }
