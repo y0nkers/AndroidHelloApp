@@ -18,6 +18,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.GridLayout;
 import android.widget.ImageView;
@@ -414,6 +416,23 @@ public class MainActivity extends AppCompatActivity {
         snackbarButtonLayout.bottomToTop = bottomText.getId();
         snackbarButton.setLayoutParams(snackbarButtonLayout);
 
+        CheckBox checkBox = new CheckBox(context);
+        checkBox.setId(View.generateViewId());
+        checkBox.setText("Checkbox");
+
+        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                if (isChecked) Toast.makeText(context, "Checkbox checked!", Toast.LENGTH_SHORT).show();
+                else Toast.makeText(context, "Checkbox unchecked!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        ConstraintLayout.LayoutParams checkBoxLayout = new ConstraintLayout.LayoutParams(0, ConstraintLayout.LayoutParams.WRAP_CONTENT);
+        checkBoxLayout.leftToLeft = ConstraintLayout.LayoutParams.PARENT_ID;
+        checkBoxLayout.bottomToTop = toastButton.getId();
+        checkBox.setLayoutParams(checkBoxLayout);
+
         constraintLayout.addView(topText);
         constraintLayout.addView(bottomText);
         constraintLayout.addView(nameEdit);
@@ -423,6 +442,7 @@ public class MainActivity extends AppCompatActivity {
         constraintLayout.addView(messageText);
         constraintLayout.addView(toastButton);
         constraintLayout.addView(snackbarButton);
+        constraintLayout.addView(checkBox);
         setContentView(constraintLayout);
     }
 
@@ -449,9 +469,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.test_elements);
+        setContentView(R.layout.test_elements);
 
-        testElements(this);
+        //testElements(this);
     }
 
     public void inputInfo(View view) {
@@ -469,5 +489,31 @@ public class MainActivity extends AppCompatActivity {
         toast.show();
 
         Snackbar.make(view, "Snackbar!", Snackbar.LENGTH_LONG).show();
+    }
+
+    public void onCheckboxClicked(View view) {
+        boolean checked = ((CheckBox) view).isChecked();
+        TextView checkboxText = findViewById(R.id.checkboxText);
+
+        switch(view.getId()) {
+            case R.id.checkbox1:
+                if (checked) Toast.makeText(this, "Checkbox1 checked!",Toast.LENGTH_LONG).show();
+                else Toast.makeText(this, "Checkbox1 unchecked!",Toast.LENGTH_LONG).show();
+                break;
+            case R.id.checkbox2:
+                if (checked) Toast.makeText(this, "Checkbox2 checked!",Toast.LENGTH_LONG).show();
+                else Toast.makeText(this, "Checkbox2 unchecked!",Toast.LENGTH_LONG).show();
+                break;
+            default:
+                checkboxText.setText("");
+                break;
+        }
+
+        CheckBox checkbox1 = findViewById(R.id.checkbox1);
+        CheckBox checkbox2 = findViewById(R.id.checkbox2);
+        String selectedItems = "";
+        if (checkbox1.isChecked()) selectedItems += checkbox1.getText() + " ";
+        if (checkbox2.isChecked()) selectedItems += checkbox2.getText();
+        checkboxText.setText(selectedItems);
     }
 }

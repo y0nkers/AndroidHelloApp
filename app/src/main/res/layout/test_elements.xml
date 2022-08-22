@@ -91,6 +91,35 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nameText"/>
 
+    <TextView android:id="@+id/checkboxText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/messageText"/>
+
+    <CheckBox android:id="@+id/checkbox1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Checkbox 1"
+        android:textSize="18sp"
+
+        android:onClick="onCheckboxClicked"
+
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/checkboxText"/>
+
+    <CheckBox android:id="@+id/checkbox2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Checkbox 2"
+        android:textSize="18sp"
+
+        android:onClick="onCheckboxClicked"
+
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/checkbox1"/>
+
     <TextView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
