@@ -30,6 +30,7 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.google.android.material.snackbar.Snackbar;
 
@@ -268,18 +269,6 @@ public class MainActivity extends AppCompatActivity {
         topTextLayout.topToTop = ConstraintLayout.LayoutParams.PARENT_ID;
         topText.setLayoutParams(topTextLayout);
 
-        TextView bottomText = new TextView(context);
-        bottomText.setTextAlignment(TextView.TEXT_ALIGNMENT_TEXT_END);
-        bottomText.setText("Check out metanit.com");
-        Linkify.addLinks(bottomText, Linkify.WEB_URLS);
-        bottomText.setLayoutParams(topTextLayout);
-        bottomText.setId(View.generateViewId());
-
-        ConstraintLayout.LayoutParams bottomTextLayout = new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.WRAP_CONTENT, ConstraintLayout.LayoutParams.WRAP_CONTENT);
-        bottomTextLayout.rightToRight = ConstraintLayout.LayoutParams.PARENT_ID;
-        bottomTextLayout.bottomToBottom = ConstraintLayout.LayoutParams.PARENT_ID;
-        bottomText.setLayoutParams(bottomTextLayout);
-
         EditText nameEdit = new EditText(context);
         nameEdit.setId(View.generateViewId());
         nameEdit.setHint("Введите имя");
@@ -408,12 +397,12 @@ public class MainActivity extends AppCompatActivity {
 
         ConstraintLayout.LayoutParams toastButtonLayout =  new ConstraintLayout.LayoutParams(0, ConstraintLayout.LayoutParams.WRAP_CONTENT);
         toastButtonLayout.leftToLeft = ConstraintLayout.LayoutParams.PARENT_ID;
-        toastButtonLayout.bottomToTop = bottomText.getId();
+        toastButtonLayout.topToBottom = messageText.getId();
         toastButton.setLayoutParams(toastButtonLayout);
 
         ConstraintLayout.LayoutParams snackbarButtonLayout =  new ConstraintLayout.LayoutParams(0, ConstraintLayout.LayoutParams.WRAP_CONTENT);
         snackbarButtonLayout.leftToRight = toastButton.getId();
-        snackbarButtonLayout.bottomToTop = bottomText.getId();
+        snackbarButtonLayout.topToBottom = messageText.getId();
         snackbarButton.setLayoutParams(snackbarButtonLayout);
 
         CheckBox checkBox = new CheckBox(context);
@@ -430,11 +419,29 @@ public class MainActivity extends AppCompatActivity {
 
         ConstraintLayout.LayoutParams checkBoxLayout = new ConstraintLayout.LayoutParams(0, ConstraintLayout.LayoutParams.WRAP_CONTENT);
         checkBoxLayout.leftToLeft = ConstraintLayout.LayoutParams.PARENT_ID;
-        checkBoxLayout.bottomToTop = toastButton.getId();
+        checkBoxLayout.topToBottom = toastButton.getId();
         checkBox.setLayoutParams(checkBoxLayout);
 
+        ToggleButton toggleButton = new ToggleButton(context);
+        toggleButton.setId(View.generateViewId());
+        toggleButton.setTextOff("Выключено");
+        toggleButton.setText(toggleButton.getTextOff());
+        toggleButton.setTextOn("Включено");
+        toggleButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                boolean checked = ((ToggleButton) view).isChecked();
+                if (checked) Toast.makeText(context, "Свет включен", Toast.LENGTH_LONG).show();
+                else Toast.makeText(context, "Свет выключен", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        ConstraintLayout.LayoutParams toggleButtonLayout = new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.WRAP_CONTENT, ConstraintLayout.LayoutParams.WRAP_CONTENT);
+        toggleButtonLayout.leftToLeft = ConstraintLayout.LayoutParams.PARENT_ID;
+        toggleButtonLayout.topToBottom = checkBox.getId();
+        toggleButton.setLayoutParams(toggleButtonLayout);
+
         constraintLayout.addView(topText);
-        constraintLayout.addView(bottomText);
         constraintLayout.addView(nameEdit);
         constraintLayout.addView(messageEdit);
         constraintLayout.addView(inputButton);
@@ -443,7 +450,16 @@ public class MainActivity extends AppCompatActivity {
         constraintLayout.addView(toastButton);
         constraintLayout.addView(snackbarButton);
         constraintLayout.addView(checkBox);
-        setContentView(constraintLayout);
+        constraintLayout.addView(toggleButton);
+
+        ConstraintLayout.LayoutParams constraintLayoutParams = new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.WRAP_CONTENT );
+        constraintLayout.setLayoutParams(constraintLayoutParams);
+
+        ScrollView scrollView = new ScrollView(context);
+        scrollView.setFillViewport(true);
+        scrollView.addView(constraintLayout);
+
+        setContentView(scrollView);
     }
 
     public void editText() {
@@ -515,5 +531,11 @@ public class MainActivity extends AppCompatActivity {
         if (checkbox1.isChecked()) selectedItems += checkbox1.getText() + " ";
         if (checkbox2.isChecked()) selectedItems += checkbox2.getText();
         checkboxText.setText(selectedItems);
+    }
+
+    public void onToggleClicked(View view) {
+        boolean checked = ((ToggleButton) view).isChecked();
+        if (checked) Toast.makeText(this, "Свет включен", Toast.LENGTH_LONG).show();
+        else Toast.makeText(this, "Свет выключен", Toast.LENGTH_LONG).show();
     }
 }
