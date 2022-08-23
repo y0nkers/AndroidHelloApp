@@ -29,6 +29,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
+import android.widget.SeekBar;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -544,13 +545,29 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    public void seekBarTest() {
+        SeekBar seekBar = findViewById(R.id.seekBar);
+        TextView textView = findViewById(R.id.seekBarValue);
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean b) {
+                textView.setText(String.valueOf(progress));
+                //textView.setText(String.valueOf(seekBar.getProgress()));
+            }
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {}
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {}
+        });
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.test_elements);
 
         dateTimePickersTest();
-
+        seekBarTest();
         //testElements(this);
     }
 
