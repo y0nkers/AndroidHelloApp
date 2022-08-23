@@ -24,6 +24,8 @@ import android.widget.EditText;
 import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TableLayout;
@@ -441,6 +443,33 @@ public class MainActivity extends AppCompatActivity {
         toggleButtonLayout.topToBottom = checkBox.getId();
         toggleButton.setLayoutParams(toggleButtonLayout);
 
+        RadioGroup radioGroup = new RadioGroup(context);
+        radioGroup.setId(View.generateViewId());
+        radioGroup.setOrientation(RadioGroup.HORIZONTAL);
+
+        ConstraintLayout.LayoutParams radioGroupLayout = new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.WRAP_CONTENT, ConstraintLayout.LayoutParams.WRAP_CONTENT);
+        radioGroupLayout.leftToLeft = ConstraintLayout.LayoutParams.PARENT_ID;
+        radioGroupLayout.topToBottom = toggleButton.getId();
+        radioGroup.setLayoutParams(radioGroupLayout);
+
+        RadioButton radioButton1 = new RadioButton(context);
+        radioButton1.setId(View.generateViewId());
+        radioButton1.setText("Java");
+        radioGroup.addView(radioButton1);
+
+        RadioButton radioButton2 = new RadioButton(context);
+        radioButton2.setId(View.generateViewId());
+        radioButton2.setText("Kotlin");
+        radioGroup.addView(radioButton2);
+
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int id) {
+                if (id == radioButton1.getId()) Toast.makeText(context, "Выбрана Java", Toast.LENGTH_LONG).show();
+                else if (id == radioButton2.getId()) Toast.makeText(context, "Выбрана Kotlin", Toast.LENGTH_LONG).show();
+            }
+        });
+
         constraintLayout.addView(topText);
         constraintLayout.addView(nameEdit);
         constraintLayout.addView(messageEdit);
@@ -451,6 +480,7 @@ public class MainActivity extends AppCompatActivity {
         constraintLayout.addView(snackbarButton);
         constraintLayout.addView(checkBox);
         constraintLayout.addView(toggleButton);
+        constraintLayout.addView(radioGroup);
 
         ConstraintLayout.LayoutParams constraintLayoutParams = new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.WRAP_CONTENT );
         constraintLayout.setLayoutParams(constraintLayoutParams);
@@ -485,9 +515,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.test_elements);
+        //setContentView(R.layout.test_elements);
 
-        //testElements(this);
+        testElements(this);
     }
 
     public void inputInfo(View view) {
@@ -537,5 +567,19 @@ public class MainActivity extends AppCompatActivity {
         boolean checked = ((ToggleButton) view).isChecked();
         if (checked) Toast.makeText(this, "Свет включен", Toast.LENGTH_LONG).show();
         else Toast.makeText(this, "Свет выключен", Toast.LENGTH_LONG).show();
+    }
+
+    public void onRadioButtonClicked(View view) {
+        boolean checked = ((RadioButton) view).isChecked();
+        TextView radioText = findViewById(R.id.radioText);
+        // Получаем нажатый переключатель
+        switch(view.getId()) {
+            case R.id.java:
+                if (checked) radioText.setText("Выбрана Java");
+                break;
+            case R.id.kotlin:
+                if (checked) radioText.setText("Выбран Kotlin");
+                break;
+        }
     }
 }
