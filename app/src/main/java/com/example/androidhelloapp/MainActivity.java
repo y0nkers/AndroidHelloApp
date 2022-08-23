@@ -20,6 +20,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.GridLayout;
 import android.widget.ImageView;
@@ -31,6 +32,7 @@ import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
@@ -512,12 +514,44 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    public void dateTimePickersTest() {
+        TextView dateTextView = findViewById(R.id.dateTextView);
+        DatePicker datePicker = findViewById(R.id.datePicker);
+
+        // Месяц начиная с нуля. Для отображения добавляем 1.
+        datePicker.init(2020, 02, 01, new DatePicker.OnDateChangedListener() {
+            @Override
+            public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+
+                // Отсчет месяцев начинается с нуля. Для отображения добавляем 1.
+                dateTextView.setText("Дата: " + view.getDayOfMonth() + "/" + (view.getMonth() + 1) + "/" + view.getYear());
+
+                // альтернативная запись
+                // dateTextView.setText("Дата: " + dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
+            }
+        });
+
+        TextView timeTextView = findViewById(R.id.timeTextView);
+        TimePicker timePicker = findViewById(R.id.timePicker);
+        timePicker.setIs24HourView(true);
+
+        timePicker.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
+            @Override
+            public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
+                timeTextView.setText("Время: " + hourOfDay + ":" + String.format("%02d", minute));
+                //timeTextView.setText("Время: " + view.getHour() + ":" + view.getMinute());
+            }
+        });
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.test_elements);
+        setContentView(R.layout.test_elements);
 
-        testElements(this);
+        dateTimePickersTest();
+
+        //testElements(this);
     }
 
     public void inputInfo(View view) {
