@@ -246,13 +246,13 @@ public class MainActivity extends AppCompatActivity {
 
         plusButton.setOnClickListener(v -> {
             clicks++;
-            clicksText.setText(clicks + " Clicks");
+            clicksText.setText(getResources().getQuantityString(R.plurals.clicks, clicks, clicks));
         });
 
         minusButton.setOnClickListener(v -> {
             if (clicks > 0) {
                 clicks--;
-                clicksText.setText(clicks + " Clicks");
+                clicksText.setText(getResources().getQuantityString(R.plurals.clicks, clicks, clicks));
             }
         });
     }
@@ -291,8 +291,8 @@ public class MainActivity extends AppCompatActivity {
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (nameEdit.getText().toString().matches("")) topText.setText("Hello, User");
-                else topText.setText("Hello, " + charSequence + "!");
+                if (nameEdit.getText().toString().matches("")) topText.setText(getString(R.string.hello_message, "User"));
+                else topText.setText(getString(R.string.hello_message, charSequence));
             }
             @Override
             public void afterTextChanged(Editable editable) {}
@@ -305,6 +305,12 @@ public class MainActivity extends AppCompatActivity {
         messageEdit.setImeOptions(EditorInfo.IME_FLAG_NO_ENTER_ACTION);
         messageEdit.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_MULTI_LINE | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
         messageEdit.setGravity(Gravity.TOP);
+
+        // Resource string-array test
+        String[] languages = getResources().getStringArray(R.array.languages);
+        String allLangs = "";
+        for (String language: languages) allLangs += language + " ";
+        messageEdit.setText(allLangs);
 
         Button inputButton = new Button(context);
         inputButton.setText("Ввод");
@@ -506,8 +512,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
                 TextView textView = findViewById(R.id.topText);
-                if (editText.getText().toString().matches("")) textView.setText("Hello, User!");
-                else textView.setText("Hello, " + charSequence + "!");
+                if (editText.getText().toString().matches("")) textView.setText(getString(R.string.hello_message, "User"));
+                else textView.setText(getString(R.string.hello_message, charSequence));
             }
 
             @Override
@@ -564,11 +570,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.test_elements);
-
+        /*setContentView(R.layout.test_elements);
         dateTimePickersTest();
-        seekBarTest();
-        //testElements(this);
+        seekBarTest();*/
+
+        //testClicks(); // Resource plurals test
+
+        testElements(this);
     }
 
     public void inputInfo(View view) {
