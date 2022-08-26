@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         constraintLayout.setBackgroundColor(Color.BLACK);
         TextView textView = new TextView(context);
         textView.setText("Hello Android");
-        textView.setTextSize(26);
+        textView.setTextSize(getResources().getDimension(R.dimen.text_size));
         textView.setBackgroundColor(Color.CYAN);
         textView.setGravity(Gravity.CENTER);
 
@@ -83,19 +83,19 @@ public class MainActivity extends AppCompatActivity {
 
         TextView textView1 = new TextView(context);
         textView1.setText("Hello Java!");
-        textView1.setTextSize(30);
+        textView1.setTextSize(getResources().getDimension(R.dimen.text_size));
         textView1.setBackgroundColor(Color.GRAY);
         linearLayout.addView(textView1, layoutParams);
 
         TextView textView2 = new TextView(context);
         textView2.setText("Hello World!");
-        textView2.setTextSize(30);
+        textView2.setTextSize(getResources().getDimension(R.dimen.text_size));
         textView2.setBackgroundColor(Color.GRAY);
         linearLayout.addView(textView2, layoutParams);
 
         TextView textView3 = new TextView(context);
         textView3.setText("Hello Android!");
-        textView3.setTextSize(30);
+        textView3.setTextSize(getResources().getDimension(R.dimen.text_size));
         textView3.setBackgroundColor(Color.GRAY);
         linearLayout.addView(textView3, layoutParams);
 
@@ -260,14 +260,14 @@ public class MainActivity extends AppCompatActivity {
     public void testElements(Context context) {
         ConstraintLayout constraintLayout = new ConstraintLayout(context);
         TextView topText = new TextView(context);
-        topText.setBackgroundColor(0xffe8eaf6); // установка фонового цвета
-        topText.setTextColor(0xff5c6bc0); // установка цвета текста
+        topText.setBackgroundColor(getResources().getColor(R.color.textViewBackColor)); // установка фонового цвета
+        topText.setTextColor(getResources().getColor(R.color.textViewFontColor)); // установка цвета текста
         topText.setAllCaps(true); // делаем все буквы заглавными
         topText.setTextAlignment(TextView.TEXT_ALIGNMENT_CENTER); // устанавливаем вравнивание текста по центру
         topText.setText("Hello, User!");
         topText.setId(View.generateViewId());
         topText.setTypeface(Typeface.create("casual", Typeface.NORMAL));
-        topText.setTextSize(26);
+        topText.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.text_size));
 
         ConstraintLayout.LayoutParams topTextLayout = new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.WRAP_CONTENT, ConstraintLayout.LayoutParams.WRAP_CONTENT);
         topTextLayout.leftToLeft = ConstraintLayout.LayoutParams.PARENT_ID;
