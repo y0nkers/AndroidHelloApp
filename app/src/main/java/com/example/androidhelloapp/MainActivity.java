@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         constraintLayout.setBackgroundColor(Color.BLACK);
         TextView textView = new TextView(context);
         textView.setText("Hello Android");
-        textView.setTextSize(getResources().getDimension(R.dimen.text_size));
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.text_size));
         textView.setBackgroundColor(Color.CYAN);
         textView.setGravity(Gravity.CENTER);
 
@@ -83,19 +83,19 @@ public class MainActivity extends AppCompatActivity {
 
         TextView textView1 = new TextView(context);
         textView1.setText("Hello Java!");
-        textView1.setTextSize(getResources().getDimension(R.dimen.text_size));
+        textView1.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.text_size));
         textView1.setBackgroundColor(Color.GRAY);
         linearLayout.addView(textView1, layoutParams);
 
         TextView textView2 = new TextView(context);
         textView2.setText("Hello World!");
-        textView2.setTextSize(getResources().getDimension(R.dimen.text_size));
+        textView2.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.text_size));
         textView2.setBackgroundColor(Color.GRAY);
         linearLayout.addView(textView2, layoutParams);
 
         TextView textView3 = new TextView(context);
         textView3.setText("Hello Android!");
-        textView3.setTextSize(getResources().getDimension(R.dimen.text_size));
+        textView3.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.text_size));
         textView3.setBackgroundColor(Color.GRAY);
         linearLayout.addView(textView3, layoutParams);
 
