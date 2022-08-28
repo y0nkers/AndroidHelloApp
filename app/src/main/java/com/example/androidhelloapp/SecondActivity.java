@@ -16,7 +16,8 @@ public class SecondActivity extends AppCompatActivity {
 
         User user;
         if (arguments != null) {
-            user = (User) arguments.getSerializable(User.class.getSimpleName());
+            // user = (User) arguments.getSerializable(UserSerializable.class.getSimpleName());
+            user = arguments.getParcelable(User.class.getSimpleName());
             TextView name = findViewById(R.id.name_activity_second);
             TextView company = findViewById(R.id.company_activity_second);
             TextView age = findViewById(R.id.age_activity_second);
