@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -573,13 +574,15 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         /*setContentView(R.layout.test_elements);
         dateTimePickersTest();
         seekBarTest();*/
 
-        //testClicks(); // Resource plurals test
+        setContentView(R.layout.activity_main);
+        testClicks(); // Resource plurals test
 
-        testElements(this);
+        //testElements(this);
 
         Log.d(TAG, "onCreate");
     }
@@ -618,6 +621,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onRestart() {
         super.onRestart();
         Log.d(TAG, "onRestart");
+    }
+
+    public void toSecondActivity(View view) {
+        Intent intent = new Intent(this, SecondActivity.class);
+        intent.putExtra("message", "Hello from main activity!");
+        startActivity(intent);
     }
 
     public void inputInfo(View view) {
