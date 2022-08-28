@@ -13,9 +13,18 @@ public class SecondActivity extends AppCompatActivity {
         setContentView(R.layout.activity_second);
 
         Bundle arguments = getIntent().getExtras();
-        String message = arguments.get("message").toString();
 
-        TextView centerText = (TextView)findViewById(R.id.centerText);
-        centerText.setText(message);
+        User user;
+        if (arguments != null) {
+            user = (User) arguments.getSerializable(User.class.getSimpleName());
+            TextView name = findViewById(R.id.name_activity_second);
+            TextView company = findViewById(R.id.company_activity_second);
+            TextView age = findViewById(R.id.age_activity_second);
+
+            name.setText("Name: " + user.getName());
+            company.setText("Company: " + user.getCompany());
+            age.setText("Age: " + user.getAge());
+        }
+
     }
 }

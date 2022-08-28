@@ -574,13 +574,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
         /*setContentView(R.layout.test_elements);
         dateTimePickersTest();
         seekBarTest();*/
 
-        setContentView(R.layout.activity_main);
-        testClicks(); // Resource plurals test
+        /*setContentView(R.layout.test_clicks);
+        testClicks(); // Resource plurals test*/
 
         //testElements(this);
 
@@ -624,8 +625,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void toSecondActivity(View view) {
+        EditText nameText = findViewById(R.id.username);
+        EditText companyText = findViewById(R.id.company);
+        EditText ageText = findViewById(R.id.age);
+
+        String name = nameText.getText().toString();
+        String company = companyText.getText().toString();
+        int age = Integer.parseInt(ageText.getText().toString());
+
+        User user = new User(name, company, age);
+
         Intent intent = new Intent(this, SecondActivity.class);
-        intent.putExtra("message", "Hello from main activity!");
+        intent.putExtra(User.class.getSimpleName(), user);
         startActivity(intent);
     }
 
