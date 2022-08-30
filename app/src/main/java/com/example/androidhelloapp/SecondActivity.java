@@ -55,4 +55,9 @@ public class SecondActivity extends AppCompatActivity {
         setResult(RESULT_OK, data);
         finish();
     }
+
+    public void toThirdActivity(View view) {
+        Intent intent = new Intent(this, ThirdActivity.class);
+        startActivity(intent);
+    }
 }
