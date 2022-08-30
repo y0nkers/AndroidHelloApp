@@ -1,8 +1,13 @@
 package com.example.androidhelloapp;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -571,6 +576,23 @@ public class MainActivity extends AppCompatActivity {
 
     private final static String TAG = "MainActivity";
 
+    static final String AGE_KEY = "AGE";
+    static final String ACCESS_MESSAGE = "ACCESS_MESSAGE";
+
+    ActivityResultLauncher<Intent> mStartForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    TextView textView = findViewById(R.id.accessText);
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        Intent intent = result.getData();
+                        String accessMessage = intent.getStringExtra(ACCESS_MESSAGE);
+                        textView.setText(accessMessage);
+                    }
+                    else textView.setText("Ошибка доступа");
+                }
+            });
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -637,7 +659,8 @@ public class MainActivity extends AppCompatActivity {
 
         Intent intent = new Intent(this, SecondActivity.class);
         intent.putExtra(User.class.getSimpleName(), user);
-        startActivity(intent);
+
+        mStartForResult.launch(intent);
     }
 
     public void inputInfo(View view) {

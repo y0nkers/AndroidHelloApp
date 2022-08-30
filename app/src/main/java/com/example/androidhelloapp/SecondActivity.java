@@ -2,7 +2,9 @@ package com.example.androidhelloapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 public class SecondActivity extends AppCompatActivity {
@@ -27,5 +29,30 @@ public class SecondActivity extends AppCompatActivity {
             age.setText("Age: " + user.getAge());
         }
 
+    }
+
+    public void onCancelClick(View v) {
+        setResult(RESULT_CANCELED);
+        finish();
+    }
+
+    public void onButton1Click(View v) {
+        sendMessage("Доступ разрешен");
+    }
+
+    public void onButton2Click(View v) {
+        sendMessage("Доступ запрещен");
+    }
+
+    public void onButton3Click(View v) {
+        sendMessage("Недопустимый возраст");
+    }
+
+    private void sendMessage(String message) {
+
+        Intent data = new Intent();
+        data.putExtra(MainActivity.ACCESS_MESSAGE, message);
+        setResult(RESULT_OK, data);
+        finish();
     }
 }
